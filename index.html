@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>frontend</title>
+	<style>
+	
+		#total{
+			border-style:solid;
+			border-width: 1px;
+			margin-left: 15%;
+			margin-right: 15%;
+		}
+		#head_nav{
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+		}
+		#logo1 {
+			width: 40px;
+			height: 40px;
+			margin-left: 10%;
+		}
+		#logo2 {
+			width: 40px;
+			height: 40px;
+			margin-right: 10%;
+			margin-top: 1.5%;
+		}
+		#head_nav:nth-child(1){
+			justify-self: left;
+		}
+		#head_nav:nth-child(2){
+			justify-content: center;
+		}
+		#head_nav:nth-child(3){
+			justify-self: right;
+		}
+		
+		#head_nav a{
+			text-decoration: none;
+			color: black;
+			padding-bottom: 15px;
+		}
+
+		#head_nav a:hover{
+			text-decoration: underline;
+			text-decoration-color: blue;
+		}
+
+		#navbar{
+			margin-top: 2%;
+			margin-bottom: 1%;
+			display: flex;
+			flex-grow: 1;
+			justify-content: space-evenly;
+		}
+
+		#contentdiv1{
+			align-items: center;
+			justify-content: center;
+			border-style: solid none solid none;
+			border-width: 1px;
+		}
+
+		#contentdiv1 h2{
+			margin-left: 20%;
+		}
+
+		#contentdiv1 p{
+			margin-left: 20%;
+			margin-right: 35%;
+		}
+	
+
+		#contentdiv2{
+			align-items: center;
+			justify-content: center;
+			display: flex;
+			flex-direction: row;
+			border-style: none none none none;
+			border-width: 1px;
+		}
+
+		#subdiv1{
+			align-items: center;
+			justify-content: center;
+			width: 50%;
+		}
+
+		#subdiv1 img{
+			margin-top: 10%;
+			margin-bottom: 10%;
+			margin-left: 10%;
+			max-width: 80%;
+			max-height: 60%;
+			width: 80%;
+			height: 40%;
+		}
+
+		#subdiv2{
+			align-items: center;
+			justify-content: center;
+			width: 50%;
+			border-style: none none none solid;
+			border-width: 1px;
+		}
+
+		#subdiv2 h3{
+			margin-left: 20%;
+		}
+
+		#subdiv2 p{
+			margin-left: 20%;
+			margin-right: 35%;
+		}
+
+		#subdiv1 h3{
+			margin-left: 10%;
+		}
+
+		#subdiv1 p{
+			margin-left: 10%;
+			margin-right: 35%;
+		}
+
+		#subdiv2 div{
+			margin-left: 20%;
+		}
+
+		#subdiv2 div img{
+			width: 20px;
+			height: 20px;
+		}
+
+		#contentdiv1 table{
+			width: 80%;
+			margin-left: 10%;
+			margin-top: 5%;
+			margin-bottom: 5%;
+		}
+    </style>
+	
+    
+</head>
+<body>
+	<div id="total">
+		<div id="head_div">
+			<nav id = "head_nav">
+				<img id = "logo1" src="./logo.png" alt="">
+				<div id="navbar">
+					<a href="">Home</a>
+					<a href="">Product</a>
+					<a href="">Support</a>
+					<a href="">Contact us</a>
+				</div>
+				<span id = "logo2">&#128269</span>
+			</nav>
+		</div>
+		<div id="contentdiv1">
+			<h2>Lorem Ipsum</h2>
+			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut augue tortor, tempor at nibh quis,
+			Etiam vel pharetra lectus. Maecenas dignissim, lorem sit amet malesuada auctor, lacus est
+			Duis diam ipsum, pellentesque eu dictum vitae, lobortis ut urna.</p>
+		</div>
+		<div id="contentdiv2">
+			<div id="subdiv1" style="border-style: none solid none none; border-width: 1px;">
+				<img src="./img1.png" alt="">
+			</div>
+			<div id="subdiv2" style="border-style: none;">
+				<h3>Nulla commodo</h3>
+				<p>justo ut consectetur
+					vivamus nec purus eu enim
+					purus aliquet urna aliquet mollis</p>
+			</div>
+		</div>
+
+		<div id = "contentdiv1">
+			<table>
+				<thead>
+					<td></td>
+					<td>option</td>
+					<td>option</td>
+					<td>option</td>
+					<td>option</td>
+					<td>option</td>
+				</thead>
+				<tbody>
+					<tr>
+						<td>option</td>
+					</tr>
+					<tr style="margin-top: 20px;">
+						<td>option</td>
+					</tr>
+					<tr style="margin-top: 20px;">
+						<td>option</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div id="contentdiv2">
+			<div id="subdiv1">
+				<h3>Nulla commodo</h3>
+				<p><u>Quisque rutrum rutrum elit
+					a tempus nunc finibus sed
+					consectetur eu rhoncus et
+					hendrerit conque lectus</u></p>
+			</div>
+			<div id="subdiv2">
+				<h3>Social</h3>
+				<div><img src="./facebook.png" alt="">
+				<img src="./google.png" alt=""></div>
+			</div>
+		</div>
+	</div>
+</body>
+<footer>
+
+</footer>
+
