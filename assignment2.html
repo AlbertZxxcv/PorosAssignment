@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body>
+    <style>
+        #outBorder {
+            width: 70%;
+            border-style: solid solid none solid;
+            border-width: 1px;
+            margin-left: 15%;
+        }
+
+        #content {
+            border-style: none none solid none;
+            border-width: 1px;
+        }
+
+        #weatherDispaly {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 80%;
+        }
+
+        #margin {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        /* #futureWeather{
+            display: flex;
+            flex-direction: row;
+        } */
+    </style>
+    <div id="outBorder">
+        <div id="content">
+            <div id="margin">
+                <input type="text" id="cityInput" placeholder="Enter the City Here">
+                <button id="btnSearch">Search</button>
+            </div>
+        </div>
+        <div id="content">
+            <div id="margin">
+                <h3 id = "currentCityWeather">Toronto Current Weather</h3>
+                <div id="weatherDispaly">
+                    <div id="icon"></div>
+                    <h1 id="temp">28</h1>
+                    <div>
+                        <p id="feel">feel like: 25 </p>
+                        <p id="humidty">Humidty: 30%</p>
+                        <p id="wind">Wind: 10 km/h</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div id="margin">
+                <h3>Future Weather</h3>
+                <div id="weatherDispaly">
+                    <div id="futureWeather">
+                        <div id="icon1"></div>
+                        <p id="day1temp">24 - 30</p>
+                        <p id="day1day">Monday</p>
+                    </div>
+                    <div id="futureWeather">
+                        <div id="icon2"></div>
+                        <p id="day2temp">24 - 30</p>
+                        <p id="day2day">Monday</p>
+                    </div>
+                    <div id="futureWeather">
+                        <div id="icon3"></div>
+                        <p id="day3temp">24 - 30</p>
+                        <p id="day3day">Monday</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        'use strict';
+        // define the function
+        function sendAjax(url) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.responseType = 'json';
+                xhr.open("GET", url);
+                xhr.send();
+                // handle the result
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4) {
+                        if (xhr.status >= 200 && xhr.status < 300) {
+                            resolve(xhr.response);
+                        } else {
+                            reject(xhr.status);
+                        }
+                    }
+                }
+
+            })
+        }
+
+        // var url1 = 'https://api.openweathermap.org/data/2.5/onecall?lat=39.904211&lon=116.407395&exclude=minutely&appid=7bf997aec5ffe358e652028355ae0235&units=metric'
+        // var url3 = 'https://api.openweathermap.org/data/3.0/onecall?lat=39.904211&lon=116.407395&appid=7bf997aec5ffe358e652028355ae0235'
+        
+
+
+        let weatherPredict = function () {
+            console.log(locationUrl);
+            sendAjax(locationUrl).then(value => {
+                var cityJason = value;
+                console.log(cityJason);
+                var lat = value.results[0].geometry.location.lat;
+                var lon = value.results[0].geometry.location.lng;
+                var cityname = value.results[0].address_components[0].short_name;
+                document.getElementById("currentCityWeather").innerText = cityname + " Current Weather";
+                var url = 'https://api.openweathermap.org/data/2.5/onecall?lat='
+                url += lat.toString() + '&lon=' + lon.toString() + '&exclude=minutely&appid=7bf997aec5ffe358e652028355ae0235&units=metric';
+
+                sendAjax(url).then(value => {
+                    var weatherJason = value;
+                    console.log(weatherJason);
+                    // change the html of the current weather
+                    var current = weatherJason.current.weather[0].main;
+                    // document.getElementById("current").innerText = current;
+
+                    var temp = weatherJason.current.temp;
+                    document.getElementById("temp").innerText = temp + " ℃";
+
+                    var humidty = weatherJason.current.humidity;
+                    document.getElementById("humidty").innerText = "Humidty: " + humidty + "%";
+
+                    var feelLike = weatherJason.current.feels_like;
+                    document.getElementById("feel").innerText = "feel like: " + feelLike.toString() + " ℃";
+
+                    var wind = weatherJason.current.wind_speed;
+                    document.getElementById("wind").innerText = "Wind: " + wind + " km/h";
+
+                    let icon = weatherJason.current.weather[0].icon;
+                    let iconUrl = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+                    document.getElementById("icon").innerHTML = "<img src = " + iconUrl + ">";
+
+                    let date = new Date();
+                    let today = date.getDay();
+                    let day = [today, (today + 1) % 7, (today + 2)%7];
+                    // change the html of the future weather day 1
+                    for (let i = 1; i <= 3; ++i) {
+                        let futureWeatherString = "day" + i + "weather";
+                        let futureTempString = "day" + i + "temp";
+                        let futuredayString = "day" + i + "day";
+
+                        let futureWeather = weatherJason.daily[i - 1].weather[0].main;
+                        // document.getElementById(futureWeatherString).innerText = futureWeather;
+
+                        let futureTempMAX = weatherJason.daily[i - 1].temp.max;
+                        let futureTempMIN = weatherJason.daily[i - 1].temp.min;
+                        document.getElementById(futureTempString).innerText = futureTempMIN + "℃ - " + futureTempMAX + "℃";
+
+                        let futureIcon = weatherJason.daily[i - 1].weather[0].icon;
+                        let futureIconUrl = "http://openweathermap.org/img/wn/" + futureIcon + "@2x.png";
+                        let iconString = "icon" + i;
+                        document.getElementById(iconString).innerHTML = "<img src = " + futureIconUrl + ">";
+
+                        let dayString = "day" + i + "day";
+                        let futureDay;
+                        if (day[i-1] == 0){
+                            futureDay = "Sunday";
+                        }else if (day[i-1] == 1){
+                            futureDay = "Monday";
+                        }else if (day[i-1] == 2){
+                            futureDay = "Tuesday";
+                        }else if (day[i-1] == 3){
+                            futureDay = "Wednesday";
+                        }else if (day[i-1] == 4){
+                            futureDay = "Thursday";
+                        }else if (day[i-1] == 5){
+                            futureDay = "Friday";
+                        }else if (day[i-1] == 6){
+                            futureDay = "Saturday";
+                        }
+                        document.getElementById(dayString).innerText = futureDay;
+                    }
+
+                }, reason => {
+                    console.warn(reason)
+                })
+
+            }, reason => {
+                console.warn(reason)
+            })
+        }
+
+        var locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+        var address = 'toronto';
+        locationUrl += address + '&key=AIzaSyBa133NrYi6BLWF2JW0mP3Dv10VI-0FbKc';
+        weatherPredict();
+        
+        var txt = document.getElementById('cityInput');
+        console.log(txt);
+        var btn = document.getElementById('btnSearch');
+        btn.onclick = function () {
+            locationUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+            address = txt.value;
+            locationUrl += address + '&key=AIzaSyBa133NrYi6BLWF2JW0mP3Dv10VI-0FbKc';
+            weatherPredict();
+        }
+
+    </script>
+</body>
+<footer>
+
+</footer>
