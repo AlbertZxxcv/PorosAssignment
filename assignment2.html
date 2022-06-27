@@ -153,7 +153,7 @@
 
                     let date = new Date();
                     let today = date.getDay();
-                    let day = [today, (today + 1) % 7, (today + 2)%7];
+                    let day = [today + 1, (today + 2) % 7, (today + 3)%7];
                     // change the html of the future weather day 1
                     for (let i = 1; i <= 3; ++i) {
                         let futureWeatherString = "day" + i + "weather";
